@@ -18,7 +18,7 @@ def createproject(request):
     form = ProjectForm()
 
     if request.method == 'POST':
-        form = ProjectForm(request.POST)
+        form = ProjectForm(request.POST, request.FILES)  #request.FILES baraye upload image tavasot karbar
         if form.is_valid:
             form.save()
             return redirect('projects')
