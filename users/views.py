@@ -5,6 +5,7 @@ from django.contrib import messages
 from .forms import CustomUserCreationForm
 from django.contrib.auth.models import User
 from .models import Profile
+from django.shortcuts import get_object_or_404
 
 
 def LoginUser(request):
@@ -36,7 +37,7 @@ def LoginUser(request):
 
 def LogoutUser(request):
     logout(request)
-    messages.error(request, 'user logged out')
+    messages.info(request, 'user logged out')
     return redirect('login')
 
 def RegisterUser(request):
@@ -55,7 +56,7 @@ def RegisterUser(request):
             login(request, user)
             return redirect('profiles')
         else:
-            messages.success(request, 'an error has accurred during registration')
+            messages.error(request, 'an error has accurred during registration')
     context = {'page': page, 'form':form}
     return render(request, 'users/login-register.html', context)
 
@@ -75,3 +76,13 @@ def userProfile(request, pk):
     return render(request, 'users/user-profile.html', context)
 
 
+
+@login_required(login_url='login')
+def userAccount(request):
+    profile = request.user.profile
+
+    skills = profile.skill_set.all()
+    projects = profile.project_set.all()
+
+    context = {'profile': profile, 'skills': skills, 'projects':projects}
+    return render(request, 'users/account.html', context)

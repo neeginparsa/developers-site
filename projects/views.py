@@ -18,12 +18,15 @@ def project(request, pk):
 
 @login_required(login_url='login')  #if user not login send user to login page
 def createproject(request):
+    profile = request.user.profile
     form = ProjectForm()
 
     if request.method == 'POST':
         form = ProjectForm(request.POST, request.FILES)  #request.FILES baraye upload image tavasot karbar
         if form.is_valid:
-            form.save()
+            project = form.save(commit=False)
+            project.owner = profile
+            project.save()
             return redirect('projects')
 
     context = {'form': form}
