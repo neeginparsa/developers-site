@@ -2,7 +2,10 @@ from django.shortcuts import render, redirect
 from .models import Project
 from .forms import ProjectForm
 from django.contrib.auth.decorators import login_required
-
+import os
+from django.http import HttpResponse
+from django.http import Http404
+from django.conf import settings
 
 def projects(request):
     projects = Project.objects.all()
@@ -27,30 +30,33 @@ def createproject(request):
             project = form.save(commit=False)
             project.owner = profile
             project.save()
-            return redirect('projects')
+            return redirect('account')
 
     context = {'form': form}
     return render(request, 'projects/project_form.html', context)
 
 @login_required(login_url='login')
 def updateproject(request, pk):
-    project = Project.objects.get(id=pk)
+    profile = request.user.profile
+    project = profile.project_set.get(id=pk)
     form = ProjectForm(instance=project)
 
     if request.method == 'POST':
         form = ProjectForm(request.POST, instance=project)
         if form.is_valid:
             form.save()
-            return redirect('projects')
+            return redirect('account')
 
     context = {'form': form}
     return render(request, 'projects/project_form.html', context)
 
 @login_required(login_url='login')
 def deleteproject(request, pk):
-    project = Project.objects.get(id=pk)
+    profile = request.user.profile
+    project = profile.project_set.get(id=pk)
     if request.method == 'POST':
         project.delete()
-        return redirect('projects')
+        return redirect('account')
     context = {'object': project}
-    return render(request, 'projects/delete_obj.html', context)
+    return render(request, 'delete_obj.html', context)
+

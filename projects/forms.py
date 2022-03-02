@@ -5,10 +5,13 @@ from django import forms
 class ProjectForm(ModelForm):
     class Meta:
         model = Project
-        fields = ['title', 'featured_image', 'description',
+        fields = ['title', 'featured_image', 'description', 'pdf',
                   'demo_link', 'source_link', 'tags']
         widgets = {
             'tags': forms.CheckboxSelectMultiple(),
+        }
+        labels = {
+            "pdf": "Document"
         }
 
     def __init__(self, *args, **kwargs):

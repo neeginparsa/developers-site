@@ -1,0 +1,26 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <form action="" method="POST" xmlns="http://www.w3.org/1999/html">
+
+    </form>
+
+
+
+    <!-- Main Section -->
+    <main class="formPage my-xl">
+        <div class="content-box">
+            <div class="formWrapper">
+
+                <br>
+
+                <form action="" method="POST" >
+                    {% csrf_token %}
+                    <p>are you sure you want to delete "<span style="color: #2d2d39; font-weight: bold"> {{ object }} </span>" ? </p>
+                        <a class="btn btn--sub btn--lg  my-md" href="{{request.GET.next}}" >Go Back</a>
+                        <input class="btn btn--sub btn--lg  my-md" type="submit" value="confirm">
+                </form>
+            </div>
+        </div>
+    </main>
+{% endblock content %}

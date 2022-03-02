@@ -25,10 +25,13 @@
           <a href="{% url 'user-profile' project.owner.id %}" class="singleProject__developer" >{{ project.owner.name}}</a>
           <h2 class="singleProject__title">{{ project.title }}</h2>
           <h3 class="singleProject__subtitle">About the Project</h3>
-          <div class="singleProject__info">
-            {{ project.description }}
-          </div>
+          <div class="singleProject__info">{{ project.description }}</div>
 
+            {% if project.pdf %}
+                <h3 class="singleProject__subtitle">Document</h3>
+                <a class="singleProject__liveLink " href="{{file.url}}" >download document</a>
+
+            {% endif %}
           <div class="comments">
             <h3 class="singleProject__subtitle">Feedback</h3>
             <h5 class="project--rating">
