@@ -5,6 +5,7 @@ from django.contrib import messages
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm
 from django.contrib.auth.models import User
 from .models import Profile
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
 
 
@@ -63,8 +64,13 @@ def RegisterUser(request):
     return render(request, 'users/login-register.html', context)
 
 def Profiles(request):
-    profiles = Profile.objects.all()
-    context = {'profiles': profiles}
+    search_query = ''
+
+    if request.GET.get('search_query'):
+        search_query = request.GET.get('search_query')
+
+    profiles = Profile.objects.filter(Q(name__icontains=search_query) | Q(short_intro__icontains=search_query))
+    context = {'profiles': profiles, 'search_query': search_query}
     return render(request, 'users/profiles.html', context)
 
 
