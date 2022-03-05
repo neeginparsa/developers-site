@@ -3,10 +3,8 @@ from .models import Project, Tag
 from .forms import ProjectForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-import os
-from django.http import HttpResponse
-from django.http import Http404
-from django.conf import settings
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+
 
 def projects(request):
     search_query = ''
@@ -19,7 +17,29 @@ def projects(request):
                                       Q(description__icontains=search_query) |
                                       Q(owner__name__icontains=search_query) |
                                       Q(tags__in=tags))
-    context = {'projects': projects, 'search_query': search_query}
+    #pagination
+    page = request.GET.get('page')
+    results = 3
+    paginator = Paginator(projects, results)
+    try:
+        projects = paginator.page(page)
+    except PageNotAnInteger:
+        page = 1
+        projects = paginator.page(page)
+    except EmptyPage:
+        page = paginator.num_pages
+        projects = paginator.page(page)
+
+    leftIndex = (int(page) - 4)
+    if leftIndex < 1:
+        leftIndex = 1
+    rightIndex = (int(page) + 5)
+    if rightIndex > paginator.num_pages:
+        rightIndex = paginator.num_pages + 1
+
+    custom_range =range(leftIndex, rightIndex)
+
+    context = {'projects': projects, 'search_query': search_query, 'paginator': paginator, 'custom_range': custom_range}
     return render(request, 'projects/projects.html', context)
 
 
