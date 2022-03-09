@@ -3,6 +3,8 @@ import uuid
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from .models import Profile
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 def createprofile(sender, instance, created, **kwargs):
@@ -14,7 +16,18 @@ def createprofile(sender, instance, created, **kwargs):
             email=user.email,
             name=user.first_name,
         )
+        #send welcome mail
 
+        subject = 'Welcome to Intellico projects'
+        message = 'Hey Developer, We are glad you are here!'
+
+        send_mail(
+            subject,
+            message,
+            settings.EMAIL_HOST_USER, #SENDER
+            [profile.email], #RECIPIENT
+            fail_silently=False,
+        )
 
 def updateprofile(sender, instance, created, **kwargs):
     profile = instance
