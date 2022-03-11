@@ -19,8 +19,15 @@
                         {{ field }}
                     </div>
                     {% endfor %}
+                     <label for="formInput#text">Tags</label>
                     <div class="form__field ">
-                        <label for="formInput#text">Tags</label>
+                        {% for tag in project.tags.all %}
+                            <div class="tag tag--pill tag--main">{{ tag.name }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="form__field ">
+
                         <textarea class="input" name="newtags" placeholder="Write all tools & equipment (Example:  Resistors diodes  Wire Jumper ....)"></textarea>
                     </div>
 
