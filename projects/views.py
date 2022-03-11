@@ -70,11 +70,17 @@ def createproject(request):
     form = ProjectForm()
 
     if request.method == 'POST':
+        newtags = request.POST.get('newtags').replace(',', '').split()
+
         form = ProjectForm(request.POST, request.FILES)  #request.FILES baraye upload image tavasot karbar
         if form.is_valid:
             project = form.save(commit=False)
             project.owner = profile
             project.save()
+            for tag in newtags:
+                tag, created = Tag.objects.get_or_create(name=tag)
+                project.tags.add(tag)
+
             return redirect('account')
 
     context = {'form': form}
@@ -87,9 +93,15 @@ def updateproject(request, pk):
     form = ProjectForm(instance=project)
 
     if request.method == 'POST':
+        newtags = request.POST.get('newtags').replace(',', '').split()
+
         form = ProjectForm(request.POST, instance=project)
         if form.is_valid:
-            form.save()
+            project = form.save()
+            for tag in newtags:
+                tag, created = Tag.objects.get_or_create(name=tag)
+                project.tags.add(tag)
+
             return redirect('account')
 
     context = {'form': form}

@@ -24,6 +24,15 @@ class Project(models.Model):
         ordering = ['-vote_ratio', '-vote_total']
 
     @property
+    def imageurl(self):
+        try:
+            url = self.featured_image.url
+        except:
+            url =''
+        return url
+
+
+    @property
     def rewiewers(self):
         queryset =self.review_set.all().values_list('owner__id', flat = True)
         return queryset
