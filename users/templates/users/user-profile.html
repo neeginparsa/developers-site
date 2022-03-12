@@ -10,8 +10,16 @@
             <div class="card__body dev">
               <img class="avatar avatar--xl" src="{{ profile.profile_image.url }}" />
               <h2 class="dev__name">{{ profile.name }}</h2>
+              {% if profile.short_intro %}
               <p class="dev__title">{{ profile.short_intro }}</p>
-              <p class="dev__location">Based in {{ profile.location }}</p>
+            {% else %}
+                <p></p>
+            {% endif %}
+            {% if profile.location %}
+              <p class="dev__location">Based in, {{ profile.location }}</p>
+            {% else %}
+                <p class="dev__location">Based in, ...</p>
+            {% endif %}
               <ul class="dev__social">
                    {% if profile.social_github %}
                 <li>
@@ -44,12 +52,17 @@
           <div class="devInfo">
             <h3 class="devInfo__title">About Me</h3>
             <p class="devInfo__about">
+               {% if profile.bio %}
               {{ profile.bio }}
+                {% else %}
+                    <p>bio not added by the person.</p>
+                {% endif %}
             </p>
           </div>
           <div class="devInfo">
             <h3 class="devInfo__title">Skills</h3>
             <div class="devInfo__skills">
+              {% if topskill %}
                 {% for skill in topskill %}
               <div class="devSkill">
                 <h4 class="devSkill__title">{{ skill.name }}</h4>
@@ -58,21 +71,30 @@
                 </p>
               </div>
                 {% endfor %}
+            {% else %}
+                    <p>top skills not added by the person.</p>
+            {% endif %}
+
 
 
               <h3 class="devInfo__subtitle">Other Skills</h3>
               <div class="devInfo__otherSkills">
+                  {% if otherskill %}
                   {% for skill in otherskill %}
                 <span class="tag tag--pill tag--sub tag--lg">
                   <small>{{ skill.name }}</small>
                 </span>
                   {% endfor %}
+                  {% else %}
+                   <p>other skills not added by the person.</p>
+              {% endif %}
               </div>
             </div>
           </div>
           <div class="devInfo">
             <h3 class="devInfo__title">Projects</h3>
             <div class="grid grid--two">
+                {% if profile.project_set.all %}
                 {% for project in profile.project_set.all %}
               <div class="column">
                 <div class="card project">
@@ -97,7 +119,9 @@
                 </div>
               </div>
                 {% endfor %}
-
+                {% else %}
+                    <p>project not added by the person.</p>
+            {% endif %}
 
             </div>
           </div>

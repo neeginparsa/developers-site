@@ -13,8 +13,16 @@
               <a class="tag tag--pill tag--main settings__btn" href="{% url 'edit-account' %}"><i class="im im-edit"></i> Edit Account</a>
               <img class="avatar avatar--xl dev__avatar" src="{{ profile.profile_image.url }}" />
               <h2 class="dev__name">{{ profile.name }}</h2>
+              {% if profile.short_intro%}
               <p class="dev__title">{{ profile.short_intro }}</p>
+              {%else%}
+              <p style="color:#ee4b4b">Short introduction not added</p>
+              {% endif %}
+              {% if profile.location%}
               <p class="dev__location">{{ profile.location}}</p>
+              {%else%}
+              <p style="color:#ee4b4b">Location not added</p>
+              {%endif%}
               <ul class="dev__social">
                 {% if profile.social_github %}
                 <li>
@@ -45,7 +53,11 @@
           <div class="devInfo">
             <h3 class="devInfo__title">About Me</h3>
             <p class="devInfo__about">
+                {%if profile.bio%}
               {{ profile.bio }}
+              {%else%}
+              <p style="color:#ee4b4b">Bio not added</p>
+              {%endif%}
             </p>
           </div>
           <div class="settings">

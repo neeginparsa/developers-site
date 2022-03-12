@@ -21,6 +21,7 @@
     {% include 'navbar.html' %}
 
 
+
     {% if messages %}
 
     {% for message in messages %}
@@ -37,7 +38,11 @@
     {% block content %}
 
     {% endblock content %}
+    <div class="d-flex flex-row align-items-center footer  border-top shadow-lg">
+        <p class="m-auto">Developed by NeginParsa 2022</p>
+    </div>
 </body>
+
 <script src="{% static 'uikit/app.js' %}"></script>
 <script src="{% static 'js/main.js' %}"></script>
 </html>

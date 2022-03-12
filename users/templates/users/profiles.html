@@ -35,11 +35,19 @@
                   <img class="avatar avatar--md" src="{{ profile.imageurl }}" alt="image" />
                   <div class="dev__meta">
                     <h3>{{ profile.name}}</h3>
+                    {% if profile.short_intro%}
                     <h5>{{ profile.short_intro|slice:"60" }}</h5>
+                    {% else %}
+                        <h5>short introduction not added</h5>
+                        {%endif%}
                   </div>
                 </div>
                 <p class="dev__info">
+                    {% if profile.bio %}
                   {{ profile.bio|slice:"150" }}
+                  {%else%}
+                  bio not added
+                  {%endif%}
                 </p>
                 <div class="dev__skills">
                 {% for skill in profile.skill_set.all|slice:"4" %}
