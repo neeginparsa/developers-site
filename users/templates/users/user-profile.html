@@ -1,6 +1,7 @@
 {% extends 'main.html' %}
 
 {% block content %}
+
 <!-- Main Section -->
   <main class="profile my-md">
     <div class="container">
@@ -42,8 +43,15 @@
                 </li>
                     {% endif %}
               </ul>
+
             {% if request.user.profile.id != profile.id %}
-              <a href="{% url 'create-message' profile.id %}" class="btn btn--sub btn--lg">Send Message </a>
+                <!--url 'create-message' profile.id-->
+              <a href="#" class=" btn btn--sub btn--lg " onclick="myFunction()" >Send Message </a>
+               <script>
+                function myFunction() {
+                  alert("This feature is disabled at the request of the admin!");
+                }
+            </script>
             {% endif %}
             </div>
           </div>

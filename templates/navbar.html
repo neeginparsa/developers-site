@@ -17,7 +17,13 @@
           <li class="header__menuItem"><a href="{% url 'projects' %}">Projects</a></li>
 
           {% if request.user.is_authenticated %}
-              <li class="header__menuItem"><a href="{% url 'inbox' %}">Inbox</a></li>
+              <!--url 'inbox' -->
+              <li class="header__menuItem"><a href="#" onclick="myFunction()">Inbox</a></li>
+              <script>
+                function myFunction() {
+                  alert("This feature is disabled at the request of the admin!");
+                }
+            </script>
               <li class="header__menuItem"><a href="{% url 'account' %}">My Account</a></li>
           <li class="header__menuItem"><a href="{% url 'create-project' %}">Add project</a></li>
           <li class="header__menuItem"><a href="{% url 'logout' %}" class="btn btn--sub">Logout</a></li>
