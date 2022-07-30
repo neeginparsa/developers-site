@@ -9,6 +9,8 @@ class ProjectForm(ModelForm):
         fields = ['title', 'featured_image', 'description', 'pdf', 'source_link']
         widgets = {
             'tags': forms.CheckboxSelectMultiple(),
+
+
         }
         labels = {
             "pdf": "Document"
