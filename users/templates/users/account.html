@@ -4,7 +4,7 @@
 
 
   <!-- Main Section -->
-  <main class="settingsPage profile my-md">
+    <main class="settingsPage profile my-md" xmlns="http://www.w3.org/1999/html">
     <div class="container">
       <div class="layout">
         <div class="column column--1of3">
@@ -26,7 +26,7 @@
               <ul class="dev__social">
                 {% if profile.social_github %}
                 <li>
-                  <a title="Github" href="{{ profile.social_github }}" target="_blank"><i class="im im-github"></i></a>
+                    <a title="Github"  href="{{ profile.social_github }}" target="_blank" ><i  class="im im-github" ></i></a>
                 </li>
                     {% endif %}
                     {% if profile.social_twitter %}

@@ -29,7 +29,7 @@
           <a href="{% url 'user-profile' project.owner.id %}" class="singleProject__developer" >{{ project.owner.name}}</a>
           <h2 class="singleProject__title">{{ project.title }}</h2>
           <h3 class="singleProject__subtitle">About the Project</h3>
-          <div class="singleProject__info">{{ project.description }}</div>
+          <div class="singleProject__info" dir="rtl" style="white-space: pre-line">{{ project.description }}</div>
 
 
           <div class="comments">
